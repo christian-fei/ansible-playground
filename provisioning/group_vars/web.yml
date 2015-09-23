@@ -1,0 +1,3 @@
+---
+base: /var/www
+api_port: 4000

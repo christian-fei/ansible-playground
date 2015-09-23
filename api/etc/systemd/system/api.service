@@ -1,5 +1,5 @@
 [Service]
-ExecStart=/usr/bin/nodejs /var/www/api/index.js
+ExecStart=/usr/bin/nodejs {{base}}/api/index.js
 Restart=always
 StandardOutput=syslog
 StandardError=syslog

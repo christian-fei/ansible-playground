@@ -1,6 +1,6 @@
 server {
   listen 80 default_server;
 
-  root /var/www/app;
+  root {{base}}/app;
   index /index.html index.html;
 }

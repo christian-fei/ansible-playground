@@ -17,28 +17,28 @@
   notify: restart nginx
 
 - name: copy app
-  copy: src=../app/www/ dest=/var/www/app/
+  copy: src=../app/www/ dest="{{base}}/app/"
   sudo: yes
   notify: restart nginx
 
 - name: configure app
-  copy: src=../app/etc/nginx/sites-available/app dest=/etc/nginx/sites-enabled/app group=www-data
+  template: src=../app/etc/nginx/sites-available/app dest=/etc/nginx/sites-enabled/app group=www-data
   sudo: yes
   notify: restart nginx
 
 - name: copy api
   synchronize:
     src=../api/
-    dest=/var/www/api/
+    dest="{{base}}/api/"
     rsync_opts=--exclude=.git,--exclude=node_modules,--exclude=etc
   sudo: yes
 
 - name: install api dependencies
-  npm: path=/var/www/api/
+  npm: path="{{base}}/api/"
   sudo: yes
 
 - name: Install unit file
-  copy: src=../api/etc/systemd/system/api.service dest=/etc/systemd/system/api.service owner=root mode=644
+  template: src=../api/etc/systemd/system/api.service dest=/etc/systemd/system/api.service owner=root mode=644
   sudo: yes
   notify:
     - reload systemd
