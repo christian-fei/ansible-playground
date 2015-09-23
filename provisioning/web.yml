@@ -1,4 +1,5 @@
 ---
 - hosts: web
   roles:
+    - common
     - web

@@ -1,17 +1,4 @@
-- name: update apt cache
-  apt: update_cache=yes cache_valid_time=3600
-  sudo: yes
-
-- name: install system packages
-  apt: pkg={{ item }} state=latest
-  sudo: yes
-  with_items:
-    - build-essential
-    - git
-    - tree
-    - curl
-    - wget
-
+---
 - name: install web packages
   apt: pkg={{ item }} state=latest
   sudo: yes
