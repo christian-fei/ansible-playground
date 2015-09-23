@@ -1,23 +1,18 @@
 ---
+- name: Create web user
+  user: name=web
+  sudo: yes
+
 - name: install web packages
   apt: pkg={{ item }} state=latest
   sudo: yes
   with_items:
     - nginx
     - nodejs
+    - npm
 
 - name: remove default nginx configuration
   file: path=/etc/nginx/sites-available/default state=absent
-  sudo: yes
-  notify: restart nginx
-
-# - name: configure main nginx proxy
-#   copy: src=../main/etc/nginx/sites-available/default dest=/etc/nginx/sites-enabled/default group=www-data
-#   sudo: yes
-#   notify: restart nginx
-
-- name: configure app
-  copy: src=../app/etc/nginx/sites-available/app dest=/etc/nginx/sites-enabled/app group=www-data
   sudo: yes
   notify: restart nginx
 
@@ -26,8 +21,36 @@
   sudo: yes
   notify: restart nginx
 
-# - name: Install unit file
-#   copy: src=../api/etc/systemd/system/api.service dest=/etc/systemd/system/api.service owner=root mode=644
-#   sudo: yes
-#   notify:
-#     - reload systemd
+- name: configure app
+  copy: src=../app/etc/nginx/sites-available/app dest=/etc/nginx/sites-enabled/app group=www-data
+  sudo: yes
+  notify: restart nginx
+
+- name: copy api
+  synchronize:
+    src=../api/
+    dest=/var/www/api/
+    rsync_opts=--exclude=.git,--exclude=node_modules,--exclude=etc
+  sudo: yes
+
+- name: install api dependencies
+  npm: path=/var/www/api/
+  sudo: yes
+
+- name: Install unit file
+  copy: src=../api/etc/systemd/system/api.service dest=/etc/systemd/system/api.service owner=root mode=644
+  sudo: yes
+  notify:
+    - reload systemd
+
+- name: enable api service
+  service: name=api enabled=yes
+  sudo: yes
+  notify:
+    - reload systemd
+
+- name: run api service
+  service: name=api state=started
+  sudo: yes
+  notify:
+    - reload systemd

@@ -1,0 +1,11 @@
+[Service]
+ExecStart=/usr/bin/nodejs /var/www/api/index.js
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+User=web
+Group=web
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
