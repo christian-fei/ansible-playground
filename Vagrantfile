@@ -6,7 +6,6 @@ Vagrant.configure('2') do |config|
     web.vm.provision :ansible do |ansible|
       ansible.inventory_path = "provisioning/hosts"
       ansible.playbook = "provisioning/web.yml"
-      ansible.host_key_checking = false # http://stackoverflow.com/questions/23492032/cant-disable-ansibles-host-key-checking
       # ansible.verbose = true
     end
     web.vm.provider "virtualbox" do |vb|
