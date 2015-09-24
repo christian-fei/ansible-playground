@@ -31,6 +31,8 @@
     src=../api/
     dest="{{base}}/api/"
     rsync_opts=--exclude=.git,--exclude=node_modules,--exclude=etc
+    recursive=yes
+    delete=yes
   sudo: yes
 
 - name: install api dependencies
