@@ -7,7 +7,7 @@ app.get('/', function (req, res) {
   res.end()
 })
 
-var server = app.listen({{api_port}}, function () {
+var server = app.listen(4000, function () {
   var host = server.address().address
   var port = server.address().port
 
