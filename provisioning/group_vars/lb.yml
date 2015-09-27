@@ -1,0 +1,11 @@
+---
+# HAProxy supports "http" and "tcp". For SSL, SMTP, etc, use "tcp".
+mode: http
+listenport: 8888
+daemonname: lb
+
+# Balancing Algorithm. Available options:
+# roundrobin, source, leastconn, source, uri
+# (if persistance is required use, "source")
+balance: roundrobin
+iface: '{{ ansible_default_ipv4.interface }}'

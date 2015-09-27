@@ -1,3 +1,4 @@
 ---
 base: /var/www
 api_port: 4000
+iface: '{{ ansible_default_ipv4.interface }}'

@@ -1,16 +1,18 @@
-WEB_NET = "192.168.11."
-WEB_RAM = 512
-WEB_BOX = "ubuntu/vivid64"
+NET = "192.168.11"
+RAM = 512
+UBUNTU_BOX = "ubuntu/vivid64"
 WEB_PLAYBOOK_NAME = "web"
+LB_PLAYBOOK_NAME = "lb"
 INVENTORY_NAME = "vagrant_hosts"
 HOSTS = {
-  "web1" => [WEB_NET+"10", WEB_RAM, WEB_BOX],
-  "web2" => [WEB_NET+"11", WEB_RAM, WEB_BOX],
+  "web1" => [WEB_PLAYBOOK_NAME, "#{NET}.10", RAM, UBUNTU_BOX],
+  "web2" => [WEB_PLAYBOOK_NAME, "#{NET}.11", RAM, UBUNTU_BOX],
+  "lb"   => [LB_PLAYBOOK_NAME,  "#{NET}.12", RAM, UBUNTU_BOX],
 }
 
 Vagrant.configure("2") do |config|
   HOSTS.each do | (name, cfg) |
-    ip, ram, box = cfg
+    playbook_name, ip, ram, box = cfg
     config.vm.define name do |machine|
       machine.vm.hostname = name
       machine.vm.box = box
@@ -22,7 +24,7 @@ Vagrant.configure("2") do |config|
       end
       machine.vm.provision :ansible do |ansible|
         ansible.inventory_path = "provisioning/#{INVENTORY_NAME}"
-        ansible.playbook = "provisioning/#{WEB_PLAYBOOK_NAME}.yml"
+        ansible.playbook = "provisioning/#{playbook_name}.yml"
         # ansible.verbose = "vvv"
         # workaround for ansible parallel execution 'issue':
         # in web.yml the synchronize module is used (rsync wrapper)
