@@ -35,5 +35,5 @@ backend app
   {% endfor %}
   balance     {{ balance }}
   {% for host in groups['web'] %}
-    server {{ host }} {{ hostvars[host]["inventory_hostname"] }}:{{ httpd_port }}
+    server {{ host }} {{ host }}:{{ httpd_port }}
   {% endfor %}
