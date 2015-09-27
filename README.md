@@ -1,6 +1,30 @@
+This is an example of provisioning vagrant with ansible and fiddle around with a multi-host infrastructure.
+
+Just `vagrant up` and 
+
 ```
 echo "192.168.11.12 ansible-provisioning.dev" >> /etc/hosts
 ```
+
+to get started.
+
+The current infrastructure looks like this:
+
+```
+                      ------------------
+                      |  HAProxy (lb)  |
+                      ------------------
+                      /                \
+              ----------------   ----------------
+              | proxy (web1) |   | proxy (web2) |
+              ----------------   ----------------
+             /  \                             / \
+        ------- -------                 ------- -------
+        | app | | api |                 | app | | api |
+        ------- -------                 ------- -------
+```
+
+
 
 #### gathering facts about hosts
 
