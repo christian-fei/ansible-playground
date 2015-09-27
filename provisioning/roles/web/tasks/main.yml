@@ -1,6 +1,8 @@
 ---
 - name: Create web user
   user: name=web
+        state=present
+        groups="sudo"
   sudo: yes
 
 - name: install web packages
