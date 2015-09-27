@@ -31,9 +31,9 @@ defaults
 
 backend app
   {% for host in groups['lb'] %}
-    listen {{ daemonname }} {{ ansible_default_ipv4.address }}:{{ listenport }}
+    listen {{ daemonname }} 0.0.0.0:{{ httpd_port }}
   {% endfor %}
   balance     {{ balance }}
   {% for host in groups['web'] %}
-    server {{ host }} {{ ansible_default_ipv4.address }}:{{ httpd_port }}
+    server {{ host }} {{ hostvars[host]["inventory_hostname"] }}:{{ httpd_port }}
   {% endfor %}
