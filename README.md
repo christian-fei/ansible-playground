@@ -30,7 +30,7 @@ The current infrastructure looks like this:
 
 ```
 ansible web \
-  -i provisioning/hosts \
+  -i provisioning/vagrant_hosts \
   --user=vagrant \
   --private-key=.vagrant/machines/web/virtualbox/private_key \
   -m setup
@@ -41,7 +41,7 @@ ansible web \
 
 ```
 ansible web \
-  -i provisioning/hosts \
+  -i provisioning/vagrant_hosts \
   --user=vagrant \
   --private-key=.vagrant/machines/web/virtualbox/private_key \
   -m command -a "sudo systemctl restart api"
