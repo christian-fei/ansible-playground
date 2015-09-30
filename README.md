@@ -3,7 +3,7 @@ This is an example of provisioning vagrant with ansible and fiddle around with a
 Just `vagrant up` and 
 
 ```
-echo "192.168.11.12 ansible-provisioning.dev" >> /etc/hosts
+echo "192.168.11.10 ansible-provisioning.dev" >> /etc/hosts
 ```
 
 to get started.

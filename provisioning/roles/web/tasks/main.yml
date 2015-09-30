@@ -24,7 +24,7 @@
   notify: restart nginx
 
 - name: configure app
-  template: src=../app/etc/nginx/sites-available/app dest=/etc/nginx/sites-enabled/app group=www-data
+  template: src=app.j2 dest=/etc/nginx/sites-enabled/app group=www-data
   sudo: yes
   notify: restart nginx
 
@@ -42,7 +42,7 @@
   sudo: yes
 
 - name: Install unit file
-  template: src=../api/etc/systemd/system/api.service dest=/etc/systemd/system/api.service owner=root mode=644
+  template: src=api.service.j2 dest=/etc/systemd/system/api.service owner=root mode=644
   sudo: yes
   notify:
     - reload systemd

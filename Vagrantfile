@@ -5,9 +5,10 @@ WEB_PLAYBOOK_NAME = "web"
 LB_PLAYBOOK_NAME = "lb"
 INVENTORY_NAME = "vagrant_hosts"
 HOSTS = {
-  "web1" => [WEB_PLAYBOOK_NAME, "#{NET}.10", RAM, UBUNTU_BOX, 8081],
-  "web2" => [WEB_PLAYBOOK_NAME, "#{NET}.11", RAM, UBUNTU_BOX, 8082],
-  "lb"   => [LB_PLAYBOOK_NAME,  "#{NET}.12", RAM, UBUNTU_BOX, 8083],
+  "lb"   => [LB_PLAYBOOK_NAME,  "#{NET}.10", RAM, UBUNTU_BOX, 8080],
+  "web1" => [WEB_PLAYBOOK_NAME, "#{NET}.11", RAM, UBUNTU_BOX, 8081],
+  "web2" => [WEB_PLAYBOOK_NAME, "#{NET}.12", RAM, UBUNTU_BOX, 8082],
+  "web3" => [WEB_PLAYBOOK_NAME, "#{NET}.13", RAM, UBUNTU_BOX, 8083],
 }
 
 Vagrant.configure("2") do |config|
