@@ -3,12 +3,14 @@ RAM = 512
 UBUNTU_BOX = "ubuntu/vivid64"
 WEB_PLAYBOOK_NAME = "web"
 LB_PLAYBOOK_NAME = "lb"
+DB_PLAYBOOK_NAME = "db"
 INVENTORY_NAME = "vagrant_hosts"
 HOSTS = {
-  "lb"   => [LB_PLAYBOOK_NAME,  "#{NET}.10", RAM, UBUNTU_BOX, 8080],
-  "web1" => [WEB_PLAYBOOK_NAME, "#{NET}.11", RAM, UBUNTU_BOX, 8081],
-  "web2" => [WEB_PLAYBOOK_NAME, "#{NET}.12", RAM, UBUNTU_BOX, 8082],
-  "web3" => [WEB_PLAYBOOK_NAME, "#{NET}.13", RAM, UBUNTU_BOX, 8083],
+  lb:   [LB_PLAYBOOK_NAME,  "#{NET}.10", RAM, UBUNTU_BOX, 8080],
+  web1: [WEB_PLAYBOOK_NAME, "#{NET}.11", RAM, UBUNTU_BOX, 8081],
+  web2: [WEB_PLAYBOOK_NAME, "#{NET}.12", RAM, UBUNTU_BOX, 8082],
+  web3: [WEB_PLAYBOOK_NAME, "#{NET}.13", RAM, UBUNTU_BOX, 8083],
+  db:   [DB_PLAYBOOK_NAME,  "#{NET}.15", RAM, UBUNTU_BOX, 8085],
 }
 
 Vagrant.configure("2") do |config|
@@ -19,11 +21,11 @@ Vagrant.configure("2") do |config|
       machine.vm.box = box
       machine.vm.network :private_network, ip: ip
       machine.ssh.insert_key = false
-      machine.vm.provider "virtualbox" do |vb|
+      machine.vm.provider :virtualbox do |vb|
         vb.customize ["modifyvm", :id, "--memory", ram]
         vb.customize ["modifyvm", :id, "--cpus", 1]
       end
-      machine.vm.network "forwarded_port", guest: 80, host: host_port
+      machine.vm.network :forwarded_port, guest: 80, host: host_port
       machine.vm.provision :ansible do |ansible|
         ansible.inventory_path = "provisioning/#{INVENTORY_NAME}"
         ansible.playbook = "provisioning/#{playbook_name}.yml"

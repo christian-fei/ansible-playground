@@ -1,0 +1,29 @@
+- name: update apt cache
+  apt: update_cache=yes cache_valid_time=3600
+  sudo: yes
+
+- name: install mongodb
+  apt: pkg=mongodb state=latest
+  sudo: yes
+  notify:
+    - start mongodb
+
+- name: allow mongo remote connections
+  sudo: yes
+  lineinfile: destfile=/etc/mongodb.conf regexp="^bind_ip" line="bind_ip = 0.0.0.0" state=present
+  notify:
+    - restart ssh
+
+- name: allow firewall authorized ports
+  sudo: yes
+  action: shell ufw allow {{ item }}
+  with_items:
+    - 27017
+
+- name: enable firewall
+  sudo: yes
+  action: shell ufw --force enable
+
+- name: show firewall status
+  sudo: yes
+  action: shell ufw status

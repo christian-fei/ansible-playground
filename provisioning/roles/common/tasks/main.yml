@@ -40,3 +40,7 @@
 - name: enable firewall
   sudo: yes
   action: shell ufw --force enable
+
+- name: show firewall status
+  sudo: yes
+  action: shell ufw status
