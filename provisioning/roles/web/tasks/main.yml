@@ -19,7 +19,7 @@
   notify: restart nginx
 
 - name: copy app
-  copy: src=../app/www/ dest="{{base}}/app/"
+  template: src=index.html.j2 dest="{{base}}/app/index.html" group=www-data
   sudo: yes
   notify: restart nginx
 

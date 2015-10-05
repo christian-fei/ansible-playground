@@ -31,6 +31,9 @@ defaults
   timeout check           10s
   maxconn                 3000
 
+  stats enabls
+  stats uri  /haproxy?stats
+
 backend app
   {% for host in groups['lb'] %}
     listen {{ daemonname }} 0.0.0.0:{{ httpd_port }}
