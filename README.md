@@ -1,6 +1,6 @@
 This is an example of provisioning vagrant with ansible and fiddle around with a multi-host infrastructure.
 
-Just `vagrant up` and 
+Just `vagrant up` and
 
 ```
 echo "192.168.11.10 ansible-provisioning.dev" >> /etc/hosts
@@ -30,7 +30,7 @@ The current infrastructure looks like this:
 
 ```
 ansible web \
-  -i provisioning/vagrant_hosts \
+  -i provisioning/vagrant_inventory \
   --user=vagrant \
   --private-key=.vagrant/machines/web/virtualbox/private_key \
   -m setup
@@ -41,7 +41,7 @@ ansible web \
 
 ```
 ansible web \
-  -i provisioning/vagrant_hosts \
+  -i provisioning/vagrant_inventory \
   --user=vagrant \
   --private-key=.vagrant/machines/web/virtualbox/private_key \
   -m command -a "sudo systemctl restart api"

@@ -4,7 +4,7 @@ UBUNTU_BOX = "ubuntu/vivid64"
 WEB_PLAYBOOK_NAME = "web"
 LB_PLAYBOOK_NAME = "lb"
 DB_PLAYBOOK_NAME = "db"
-INVENTORY_NAME = "vagrant_hosts"
+INVENTORY = "vagrant_inventory"
 HOSTS = {
   lb:   [LB_PLAYBOOK_NAME,  "#{NET}.10", RAM, UBUNTU_BOX, 8080],
   web1: [WEB_PLAYBOOK_NAME, "#{NET}.11", RAM, UBUNTU_BOX, 8081],
@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
       end
       machine.vm.network :forwarded_port, guest: 80, host: host_port
       machine.vm.provision :ansible do |ansible|
-        ansible.inventory_path = "provisioning/#{INVENTORY_NAME}"
+        ansible.inventory_path = "provisioning/#{INVENTORY}"
         ansible.playbook = "provisioning/#{playbook_name}.yml"
         ansible.verbose = "vvv"
         # workaround for ansible parallel execution 'issue':
