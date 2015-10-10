@@ -1,3 +1,4 @@
+HOSTNAME = "ansible-playground.dev"
 NET = "192.168.11"
 RAM = 512
 UBUNTU_BOX = "ubuntu/vivid64"
@@ -15,8 +16,8 @@ Vagrant.configure("2") do |config|
   HOSTS.each do | (name, cfg) |
     playbook_name, ip, ram, box, host_port = cfg
     config.vm.define name do |machine|
-      machine.vm.hostname = name
       machine.vm.box = box
+      machine.vm.provision :shell, inline: "hostnamectl set-hostname #{name}"
       machine.vm.network :private_network, ip: ip
       machine.ssh.insert_key = false
       machine.vm.provider :virtualbox do |vb|
